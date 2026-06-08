@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV - {{ personal_info.name }}</title>
+    <style>
+        body.en {
+                direction: ltr;
+                text-align: left;
+                font-family: 'Arial', sans-serif; /* or your preferred Latin font */
+            }
+
+            body.ar {
+                direction: rtl;
+                text-align: right;
+                font-family: 'Cairo', 'Amiri', sans-serif; /* Arabic fonts */
+            }
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            line-height: 1.5;
+            margin: 0;
+            padding: 40px;
+            background: #f5f5f5;
+        }
+        .cv-container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: white;
+            padding: 50px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            border: 1px solid #ddd;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #2c3e50;
+        }
+        .name {
+            font-size: 2.2em;
+            color: #2c3e50;
+            margin: 0;
+            font-weight: normal;
+            letter-spacing: 1px;
+        }
+        .job-title {
+            font-size: 1.2em;
+            color: #7f8c8d;
+            margin: 10px 0;
+            font-style: italic;
+        }
+        .contact-info {
+            color: #666;
+            font-size: 0.9em;
+            letter-spacing: 0.5px;
+        }
+        .section {
+            margin-bottom: 30px;
+        }
+        .section-title {
+            font-size: 1.3em;
+            color: #2c3e50;
+            border-bottom: 1px solid #bdc3c7;
+            padding-bottom: 5px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .experience-item, .education-item {
+            margin-bottom: 20px;
+            padding-left: 20px;
+            border-left: 2px solid #bdc3c7;
+        }
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        .item-title {
+            font-weight: bold;
+            color: #2c3e50;
+            font-size: 1.1em;
+        }
+        .item-subtitle {
+            color: #7f8c8d;
+            font-size: 0.95em;
+        }
+        .item-date {
+            color: #95a5a6;
+            font-size: 0.85em;
+        }
+        .skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .skill-tag {
+            background: #ecf0f1;
+            color: #2c3e50;
+            padding: 4px 12px;
+            border-radius: 3px;
+            font-size: 0.85em;
+            border: 1px solid #bdc3c7;
+        }
+        .photo {
+            width: 120px;
+            height: 120px;
+            border-radius: 2px;
+            object-fit: cover;
+            margin: 0 auto 20px;
+            display: block;
+            border: 2px solid #2c3e50;
+        }
+    </style>
+</head>
+<body class="{{ language }}">
+        {% if personal_info.photo_base64 %}
+        <img src="{{ personal_info.photo_base64 }}" alt="الصورة الشخصية" class="photo">
+        {% elif personal_info.photo_path %}
+        <img src="{{ personal_info.photo_path }}" alt="الصورة الشخصية" class="photo">
+        {% endif %} 
+
+        <div class="header">
+            <h1 class="name">{{ personal_info.name }}</h1>
+            {% if personal_info.job_title %}
+            <div class="job-title">{{ personal_info.job_title }}</div>
+            {% endif %}
+            <div class="contact-info">
+                {% if personal_info.email %}{{ personal_info.email }} | {% endif %}
+                {% if personal_info.phone %}{{ personal_info.phone }} | {% endif %}
+                {% if personal_info.location %}{{ personal_info.location }}{% endif %}
+            </div>
+        </div>
+
+        {% if personal_info.summary %}
+        <div class="section">
+            <h2 class="section-title">Professional Summary</h2>
+            <p>{{ personal_info.summary }}</p>
+        </div>
+        {% endif %}
+
+        {% if experience %}
+        <div class="section">
+            <h2 class="section-title">Work Experience</h2>
+            {% for exp in experience %}
+            <div class="experience-item">
+                <div class="item-header">
+                    <div>
+                        <div class="item-title">{{ exp.title }}</div>
+                        <div class="item-subtitle">{{ exp.company }}</div>
+                    </div>
+                    <div class="item-date">
+                        {{ exp.start_date }} - {{ exp.end_date or 'Present' }}
+                    </div>
+                </div>
+                {% if exp.description %}
+                <p>{{ exp.description }}</p>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        {% if education %}
+        <div class="section">
+            <h2 class="section-title">Education</h2>
+            {% for edu in education %}
+            <div class="education-item">
+                <div class="item-header">
+                    <div>
+                        <div class="item-title">{{ edu.degree }}</div>
+                        <div class="item-subtitle">{{ edu.institution }}</div>
+                    </div>
+                    <div class="item-date">
+                        {{ edu.start_date }} - {{ edu.end_date or 'Present' }}
+                    </div>
+                </div>
+                {% if edu.description %}
+                <p>{{ edu.description }}</p>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        {% if skills %}
+        <div class="section">
+            <h2 class="section-title">Skills</h2>
+            <div class="skills">
+                {% for skill in skills.split(',') %}
+                <div class="skill-tag">{{ skill.strip() }}</div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+        {% if extra %}
+        <div class="section">
+            <h2 class="section-title">Additional Information</h2>
+            {% for item in extra %}
+            <div class="experience-item">
+                <div class="item-title">{{ item.title }}</div>
+                {% if item.description %}
+                <p>{{ item.description }}</p>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>

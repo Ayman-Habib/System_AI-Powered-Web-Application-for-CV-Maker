@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row">
+  <div class="col-lg-8 mx-auto">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h4 class="card-title mb-3">Review & Edit</h4>
+        <form id="reviewForm">
+          <input type="hidden" name="language" id="language2" value="{{ language }}">
+          {% if personal_info %}
+          <h5>Personal Information</h5>
+          <div class="mb-3">
+            <label class="form-label">Full Name</label>
+            <input type="text" class="form-control" name="personal_info[name]" value="{{ personal_info.name }}">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Professional Summary</label>
+            <textarea class="form-control" name="personal_info[summary]" rows="4">{{ personal_info.summary }}</textarea>
+          </div>
+          {% endif %}
+          <div class="d-flex justify-content-between mt-4">
+            <a href="/" class="btn btn-secondary">Back</a>
+            <button type="button" id="goToPreview" class="btn btn-success">Go to Final Preview</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,76 @@
+@font-face {
+  font-family: 'Cairo';
+  src: url('/static/fonts/Cairo-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Amiri';
+  src: url('/static/fonts/Amiri-Regular.ttf') format('truetype');
+}
+
+/* === Page setup for PDF === */
+@page {
+  size: A4;
+  margin: 0cm; /* Very tight page margins */
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Cairo', 'Amiri', sans-serif;
+  font-size: 11pt; /* Slightly smaller font */
+  line-height: 1.2; /* Tighter spacing */
+  color: #222;
+  background: white;
+  direction: rtl; /* Keep for Arabic */
+  text-align: right; /* Keep for Arabic */
+}
+
+/* Optional container wrapper */
+.container {
+  margin: 0;
+  padding: 0.2cm; /* Minimal padding */
+}
+
+/* Section titles */
+.section-title {
+  font-weight: bold;
+  color: #1b4b72;
+  margin: 2px 0 2px; /* Minimal vertical margin */
+  font-size: 12pt; /* Slightly larger than body */
+}
+
+/* Paragraphs */
+p {
+  margin: 0 0 1px; /* Minimal vertical spacing */
+}
+
+/* Tables */
+table {
+  border-collapse: collapse;
+  margin: 0;
+  padding: 0;
+  font-size: 11pt;
+}
+
+/* Lists */
+ul, ol {
+  margin: 0 0 1px;
+  padding-left: 0.8em;
+}
+
+/* Images */
+img {
+  display: block;
+  margin: 0;
+  padding: 0;
+  max-width: 100%;
+  height: auto;
+}
+
+/* Reduce spacing for headings (h1-h6) */
+h1, h2, h3, h4, h5, h6 {
+  margin: 2px 0 2px;
+  padding: 0;
+  line-height: 1.1;
+}

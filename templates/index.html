@@ -1,0 +1,534 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0 text-center"
+                    data-en="Create Your Professional CV"
+                    data-ar="أنشئ سيرتك الذاتية الاحترافية">
+                <i class="fas fa-magic me-2"></i>Create Your Professional CV
+                </h4>
+
+            </div>
+
+            <!-- قسم اختيار التصميم -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-palette me-2"></i>
+                        <span data-en="Choose CV Design" data-ar="اختر تصميم السيرة الذاتية">Choose CV Design</span>
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row" id="templateSelection">
+                        <!-- سيتم ملؤها بالجافاسكريبت -->
+                    </div>
+                    <!-- حقل مخفي لحفظ التصميم المختار -->
+                    <input type="hidden" id="selectedTemplate" name="template" value="modern">
+                </div>
+            </div>
+
+            <form id="cvForm">
+                <input type="hidden" id="language" name="language" value="en">
+
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="fas fa-user me-2"></i><span data-en="Personal Information" data-ar="المعلومات الشخصية">Personal Information</span></h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label" data-en="Full Name" data-ar="الاسم الكامل">Full Name *</label>
+                                    <input type="text" class="form-control" name="personal_info[name]" 
+                                           required 
+                                           data-field-type="name"
+                                           minlength="2"
+                                           maxlength="30"
+                                           pattern="[a-zA-Z\u0600-\u06FF\s\-\.]+"
+                                           title="Name can only contain letters, spaces, hyphens and dots">
+                                    <div class="invalid-feedback" data-en="Please enter a valid name (2-30 characters, letters and spaces only)" 
+                                         data-ar="يرجى إدخال اسم صحيح (2-30 حرف، أحرف ومسافات فقط)">
+                                        Please enter a valid name
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" data-en="Current Job Title" data-ar="المسمى الوظيفي الحالي">Current Job Title</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" name="personal_info[job_title]" 
+                                               data-field-type="job_title"
+                                               maxlength="100">
+                                        <button type="button" class="btn btn-outline-primary ai-enhance" data-field="job_title">
+                                            <i class="fas fa-wand-magic-sparkles"></i>
+                                        </button>
+                                    </div>
+                                    <div class="invalid-feedback" data-en="Job title cannot exceed 50 characters" 
+                                         data-ar="المسمى الوظيفي لا يمكن أن يتجاوز 50 حرف">
+                                        Job title too long
+                                    </div>
+                                </div>
+                                
+                                <!-- الوظيفة المستهدفة - المضاف -->
+                                <div class="mb-3">
+                                    <label class="form-label" data-en="Target Job Position" data-ar="الوظيفة المستهدفة">
+                                        Target Job Position
+                                    </label>
+                                    <div class="input-group">
+                                        <input type="text" 
+                                               class="form-control" 
+                                               id="target_job_title" 
+                                               name="target_job_title"
+                                               data-en-placeholder="e.g. Project Manager, Senior Developer"
+                                               data-ar-placeholder="مثلاً: مدير مشاريع، مطور أول"
+                                               placeholder="e.g. Project Manager, Senior Developer"
+                                               maxlength="100"
+                                               data-field-type="target_job_title">
+                                        <button type="button" class="btn btn-outline-primary ai-enhance" data-field="target_job_title">
+                                            <i class="fas fa-wand-magic-sparkles"></i>
+                                        </button>
+                                    </div>
+                                    <div class="form-text" 
+                                         data-en="The AI will tailor your CV for this specific position" 
+                                         data-ar="سيقوم الذكاء الاصطناعي بتخصيص سيرتك الذاتية لهذه الوظيفة المحددة">
+                                         The AI will tailor your CV for this specific position
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label" data-en="Email" data-ar="البريد الإلكتروني">Email *</label>
+                                    <input type="email" class="form-control" name="personal_info[email]" 
+                                           required
+                                           data-field-type="email"
+                                           pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}">
+                                    <div class="invalid-feedback" data-en="Please enter a valid email address" 
+                                         data-ar="يرجى إدخال بريد إلكتروني صحيح">
+                                        Please enter a valid email
+                                    </div>
+                                </div>
+                                
+                                <!-- الشركة المستهدفة -->
+                                <div class="mb-3">
+                                    <label class="form-label" data-en="Target Organization / Company" data-ar="الجهة أو الشركة المستهدفة">
+                                        Target Organization / Company
+                                    </label>
+                                    <input type="text" 
+                                           class="form-control" 
+                                           id="organization" 
+                                           name="organization" 
+                                           data-en-placeholder="e.g. Google, Ministry of Education"
+                                           data-ar-placeholder="مثلاً: جوجل، وزارة التربية والتعليم"
+                                           placeholder="e.g. Google, Ministry of Education"
+                                           maxlength="100">
+                                    <div class="form-text" 
+                                         data-en="The AI will tailor your CV text to fit this organization" 
+                                         data-ar="سيقوم الذكاء الاصطناعي بمواءمة نص سيرتك الذاتية مع هذه الجهة">
+                                         The AI will tailor your CV text to fit this organization
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                  <label class="form-label" data-en="Phone" data-ar="الهاتف">Phone</label>
+                                  <input type="tel" class="form-control" name="personal_info[phone]" 
+                                        maxlength="20"
+                                        title="Enter phone number (max 20 characters)">
+                                  <div class="invalid-feedback" data-en="Phone number must be 20 characters or less" 
+                                      data-ar="رقم الهاتف يجب أن يكون 20 حرفاً أو أقل">
+                                      Phone number must be 20 characters or less
+                                  </div>
+                              </div>
+                                <div class="mb-3">
+                                    <label class="form-label" data-en="Location" data-ar="الموقع">Location</label>
+                                    <input type="text" class="form-control" name="personal_info[location]" 
+                                           data-field-type="location"
+                                           maxlength="100">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" data-en="Profile Photo" data-ar="الصورة الشخصية">Profile Photo</label>
+                                    <input type="file" class="form-control" id="profilePhoto" accept="image/*">
+                                    <input type="hidden" name="personal_info[photo]" id="photoBase64">
+                                    <div class="form-text" data-en="Max 5MB, JPG/PNG formats" data-ar="الحد الأقصى 5MB، صيغ JPG/PNG">
+                                        Max 5MB, JPG/PNG formats
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" data-en="Professional Summary" data-ar="ملخص مهني">Professional Summary</label>
+                            <div class="input-group">
+                                <textarea class="form-control" rows="3" name="personal_info[summary]" 
+                                          data-field-type="summary"
+                                          maxlength="2000"></textarea>
+                                <button type="button" class="btn btn-outline-primary ai-enhance" data-field="summary">
+                                    <i class="fas fa-wand-magic-sparkles"></i>
+                                </button>
+                            </div>
+                            <div class="invalid-feedback" data-en="Summary cannot exceed 2000 characters" 
+                                 data-ar="الملخص لا يمكن أن يتجاوز 2000 حرف">
+                                Summary too long
+                            </div>
+                            <div class="form-text" data-en="10-2000 characters recommended" data-ar="10-2000 حرف موصى به">
+                                10-2000 characters recommended
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="fas fa-briefcase me-2"></i><span data-en="Work Experience" data-ar="الخبرة العملية">Work Experience</span></h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="experienceFields">
+                            <div class="experience-item mb-3 border-top pt-3">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label class="form-label" data-en="Job Title" data-ar="المسمى الوظيفي">Job Title</label>
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" name="experience[0][title]" 
+                                                       data-field-type="experience_title"
+                                                       maxlength="100">
+                                                <button type="button" class="btn btn-outline-primary ai-enhance" data-field="experience_title">
+                                                    <i class="fas fa-wand-magic-sparkles"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label class="form-label" data-en="Company" data-ar="الشركة">Company</label>
+                                            <input type="text" class="form-control" name="experience[0][company]" 
+                                                   data-field-type="company"
+                                                   maxlength="100">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="mb-3">
+                                            <label class="form-label" data-en="Start Date" data-ar="تاريخ البدء">Start Date *</label>
+                                            <input type="month" class="form-control experience-date" 
+                                                   name="experience[0][start_date]" 
+                                                   data-field-type="start_date"
+                                                   required>
+                                            <div class="invalid-feedback" data-en="Start date is required" 
+                                                 data-ar="تاريخ البدء مطلوب">
+                                                Start date required
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="mb-3">
+                                            <label class="form-label" data-en="End Date" data-ar="تاريخ الانتهاء">End Date</label>
+                                            <input type="month" class="form-control experience-date" 
+                                                   name="experience[0][end_date]" 
+                                                   data-field-type="end_date">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3 d-flex align-items-end h-100">
+                                            <div class="form-check">
+                                                <input class="form-check-input experience-current" 
+                                                       type="checkbox" 
+                                                       name="experience[0][current]" 
+                                                       id="exp_current_0"
+                                                       data-field-type="current">
+                                                <label class="form-check-label" for="exp_current_0" data-en="Current Position" data-ar="الوظيفة الحالية">
+                                                    Current Position
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" data-en="Description" data-ar="الوصف">Description</label>
+                                    <div class="input-group">
+                                        <textarea class="form-control" rows="3" name="experience[0][description]" 
+                                                  data-field-type="experience_description"
+                                                  maxlength="1000"></textarea>
+                                        <button type="button" class="btn btn-outline-primary ai-enhance" data-field="experience">
+                                            <i class="fas fa-wand-magic-sparkles"></i>
+                                        </button>
+                                    </div>
+                                    <div class="invalid-feedback" data-en="Description cannot exceed 1000 characters" 
+                                         data-ar="الوصف لا يمكن أن يتجاوز 1000 حرف">
+                                        Description too long
+                                    </div>
+                                </div>
+                                <div class="date-validation-message text-danger small mb-2" style="display: none;"></div>
+                                <button type="button" class="btn btn-outline-danger btn-sm remove-field">
+                                    <i class="fas fa-trash me-1"></i>
+                                    <span data-en="Remove" data-ar="حذف">Remove</span>
+                                </button>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-outline-secondary" id="addExperience">
+                            <i class="fas fa-plus me-1"></i>
+                            <span data-en="Add Experience" data-ar="إضافة خبرة">Add Experience</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="fas fa-graduation-cap me-2"></i><span data-en="Education" data-ar="التعليم">Education</span></h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="educationFields">
+                            <div class="education-item mb-3 border-top pt-3">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label class="form-label" data-en="Degree" data-ar="الدرجة العلمية">Degree</label>
+                                            <input type="text" class="form-control" name="education[0][degree]" 
+                                                   data-field-type="degree"
+                                                   maxlength="100">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label class="form-label" data-en="Institution" data-ar="المؤسسة">Institution</label>
+                                            <input type="text" class="form-control" name="education[0][institution]" 
+                                                   data-field-type="institution"
+                                                   maxlength="100">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="mb-3">
+                                            <label class="form-label" data-en="Start Date" data-ar="تاريخ البدء">Start Date</label>
+                                            <input type="month" class="form-control education-date" 
+                                                   name="education[0][start_date]" 
+                                                   data-field-type="start_date">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="mb-3">
+                                            <label class="form-label" data-en="End Date" data-ar="تاريخ الانتهاء">End Date</label>
+                                            <input type="month" class="form-control education-date" 
+                                                   name="education[0][end_date]" 
+                                                   data-field-type="end_date">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3 d-flex align-items-end h-100">
+                                            <div class="form-check">
+                                                <input class="form-check-input education-current" 
+                                                       type="checkbox" 
+                                                       name="education[0][current]" 
+                                                       id="edu_current_0"
+                                                       data-field-type="current">
+                                                <label class="form-check-label" for="edu_current_0" data-en="Current Study" data-ar="الدراسة الحالية">
+                                                    Current Study
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" data-en="Description" data-ar="الوصف">Description</label>
+                                    <div class="input-group">
+                                        <textarea class="form-control" rows="2" name="education[0][description]" 
+                                                  data-field-type="education_description"
+                                                  maxlength="500"></textarea>
+                                        <button type="button" class="btn btn-outline-primary ai-enhance" data-field="education">
+                                            <i class="fas fa-wand-magic-sparkles"></i>
+                                        </button>
+                                    </div>
+                                    <div class="invalid-feedback" data-en="Description cannot exceed 500 characters" 
+                                         data-ar="الوصف لا يمكن أن يتجاوز 500 حرف">
+                                        Description too long
+                                    </div>
+                                </div>
+                                <div class="date-validation-message text-danger small mb-2" style="display: none;"></div>
+                                <button type="button" class="btn btn-outline-danger btn-sm remove-field">
+                                    <i class="fas fa-trash me-1"></i>
+                                    <span data-en="Remove" data-ar="حذف">Remove</span>
+                                </button>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-outline-secondary" id="addEducation">
+                            <i class="fas fa-plus me-1"></i>
+                            <span data-en="Add Education" data-ar="إضافة تعليم">Add Education</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="fas fa-tools me-2"></i><span data-en="Skills" data-ar="المهارات">Skills</span></h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label class="form-label" data-en="Skills (comma separated)" data-ar="المهارات (مفصولة بفواصل)">Skills (comma separated)</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="skills" 
+                                       data-field-type="skills"
+                                       maxlength="500">
+                                <button type="button" class="btn btn-outline-primary ai-enhance" data-field="skills">
+                                    <i class="fas fa-wand-magic-sparkles"></i>
+                                </button>
+                            </div>
+                            <div class="invalid-feedback" data-en="Skills cannot exceed 500 characters" 
+                                 data-ar="المهارات لا يمكن أن تتجاوز 500 حرف">
+                                Skills too long
+                            </div>
+                            <div class="form-text" data-en="Example: JavaScript, Python, Project Management" data-ar="مثال: JavaScript, Python, إدارة المشاريع">
+                                Example: JavaScript, Python, Project Management
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="fas fa-plus-circle me-2"></i><span data-en="Extra Information" data-ar="معلومات إضافية">Extra Information</span></h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="extraFields">
+                            <div class="extra-item mb-3 border-top pt-3">
+                                <div class="mb-3">
+                                    <label class="form-label" data-en="Title" data-ar="العنوان">Title</label>
+                                    <input type="text" class="form-control" name="extra[0][title]" 
+                                           data-field-type="extra_title"
+                                           maxlength="100">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" data-en="Description" data-ar="الوصف">Description</label>
+                                    <div class="input-group">
+                                        <textarea class="form-control" rows="2" name="extra[0][description]" 
+                                                  data-field-type="extra_description"
+                                                  maxlength="500"></textarea>
+                                        <button type="button" class="btn btn-outline-primary ai-enhance" data-field="extra">
+                                            <i class="fas fa-wand-magic-sparkles"></i>
+                                        </button>
+                                    </div>
+                                    <div class="invalid-feedback" data-en="Description cannot exceed 500 characters" 
+                                         data-ar="الوصف لا يمكن أن يتجاوز 500 حرف">
+                                        Description too long
+                                    </div>
+                                </div>
+                                <button type="button" class="btn btn-outline-danger btn-sm remove-field">
+                                    <i class="fas fa-trash me-1"></i>
+                                    <span data-en="Remove" data-ar="حذف">Remove</span>
+                                </button>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-outline-secondary" id="addExtra">
+                            <i class="fas fa-plus me-1"></i>
+                            <span data-en="Add Extra Section" data-ar="إضافة قسم إضافي">Add Extra Section</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- قسم مستوى التحسين -->
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5 class="mb-0">
+                            <i class="fas fa-chart-line me-2"></i>
+                            <span data-en="AI Enhancement Level" data-ar="مستوى التحسين بالذكاء الاصطناعي">AI Enhancement Level</span>
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="alert alert-info">
+                            <i class="fas fa-info-circle me-2"></i>
+                            <span id="styleLevelDisplay">
+                                <span data-en="Style Level: 1 (Modern Professional)" data-ar="مستوى الأسلوب: 1 (مهني عصري)">
+                                    Style Level: 1 (Modern Professional)
+                                </span>
+                            </span>
+                            <div class="progress mt-2" style="height: 8px;">
+                                <div id="styleProgressBar" class="progress-bar bg-primary" role="progressbar" 
+                                     style="width: 20%;" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                            <br>
+                            <small class="text-muted" data-en="The AI improves your text with different styles each time you enhance. Every 2 enhancements increase the style level." data-ar="الذكاء الاصطناعي يحسن نصوصك بأساليب مختلفة في كل مرة. كل تحسينين يزيدان مستوى الأسلوب.">
+                                The AI improves your text with different styles each time you enhance. Every 2 enhancements increase the style level.
+                            </small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- رسائل التحقق -->
+                <div class="alert alert-warning" id="validationSummary" style="display: none;">
+                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    <span id="validationMessage" data-en="Please fix the errors below before proceeding" data-ar="يرجى تصحيح الأخطاء أدناه قبل المتابعة">
+                        Please fix the errors below before proceeding
+                    </span>
+                </div>
+
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <button type="button" class="btn btn-primary btn-lg me-2" id="previewBtn">
+                            <i class="fas fa-eye me-1"></i>
+                            <span data-en="Preview CV" data-ar="معاينة السيرة الذاتية">Preview CV</span>
+                        </button>
+                        
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="previewModal" tabindex="-1">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="previewModalLabel" data-en="CV Preview" data-ar="معاينة السيرة الذاتية">CV Preview</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div id="previewContent"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" data-en="Close" data-ar="إغلاق">Close</button>
+                <button type="button" class="btn btn-primary" id="generateFromPreview" data-en="Generate PDF" data-ar="إنشاء PDF">Generate PDF</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.input-group .btn.ai-enhance {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.enhancement-indicator {
+    font-size: 0.8rem;
+}
+
+.was-validated .form-control:invalid,
+.was-validated .form-control:valid {
+    background-image: none;
+    padding-right: 0.75rem;
+}
+
+.date-validation-message {
+    font-size: 0.875rem;
+}
+
+/* تحسينات للغة العربية */
+html[dir="rtl"] .input-group .btn.ai-enhance {
+    border-top-left-radius: 0.375rem;
+    border-bottom-left-radius: 0.375rem;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+html[dir="rtl"] .input-group .form-control {
+    border-top-right-radius: 0.375rem;
+    border-bottom-right-radius: 0.375rem;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+</style>
+
+
+{% endblock %}
