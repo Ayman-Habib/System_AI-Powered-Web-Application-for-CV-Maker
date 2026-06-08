@@ -2,16 +2,26 @@
 An System_AI-Powered-Web-Application-for-CV-Maker that simplifies and enhances the CV creation process using artificial intelligence. Built as a senior graduation project at the University of Bahrain, this tool helps job seekers, fresh graduates, and professionals create high-quality, ATS-friendly resumes in both English and Arabic with just a few clicks.
 
 🚀 Features:
+
 🤖 AI Text Enhancement – Uses DeepSeek API to rewrite job descriptions, skills, and summaries in a professional tone.
+
 🌍 Bilingual Support – Seamless switching between English and Arabic, including RTL/LTR layout adjustment.
+
 🎨 Multiple Templates – Choose from Modern, Professional, and Classic CV templates.
+
 📄 PDF Export – Generate and download your CV as a high-quality PDF.
+
 🖼️ Profile Picture Upload – Add a personal photo to your CV.
+
 ✏️ Dynamic Sections – Add or remove work experience, education, and extra information blocks.
+
 🔍 Live Preview – See real-time changes before downloading.
+
 ✅ Form Validation – Ensures required fields, valid emails, and phone numbers.
 
+
 🛠️ Tech Stack
+
 Layer	Technology
 Frontend	HTML5, CSS3, Bootstrap 5, jQuery
 Backend	Python, Flask
