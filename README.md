@@ -23,22 +23,35 @@ An System_AI-Powered-Web-Application-for-CV-Maker that simplifies and enhances t
 🛠️ Tech Stack
 
 Layer	Technology
+
 Frontend	HTML5, CSS3, Bootstrap 5, jQuery
+
 Backend	Python, Flask
+
 AI Integration	DeepSeek API
+
 PDF Generation	WexPrint (HTML to PDF)
+
 Templating	Jinja2
+
 
 📁 Project Structure:
 ├── app.py                 # Main Flask application
+
 ├── requirements.txt       # Python dependencies
+
 ├── .env.example           # Environment variables template
+
 ├── templates/             # HTML templates (Jinja2)
+
 ├── static/                # CSS, JS, images
+
 └── README.md              # Project documentation
 
 
+
 🧪 How to Run Locally:
+
 Make sure you have Python 3.8+ installed.
 
 bash
@@ -68,13 +81,23 @@ Supervisors: Dr. Mohammed Mazin & Dr. Aysha Al-Sayed
 Academic Year: 2025–2026 – Semester 1
 
 📌 Future Work:
+
 More professional templates
+
 Dark mode and drag‑and‑drop sections
+
 Mobile application version
+
 Improved AI prompts for smarter suggestions
+
 Additional languages (French, Portuguese)
+
 Direct integration with job portals (LinkedIn, Bayt)
+
 ATS‑compatible output formatting
+
+
+
 
 DeepSeek CV Generator (English default)
 Run:
