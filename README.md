@@ -36,6 +36,7 @@ Templating	Jinja2
 
 
 📁 Project Structure:
+
 ├── app.py                 # Main Flask application
 
 ├── requirements.txt       # Python dependencies
